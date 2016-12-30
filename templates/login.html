@@ -1,0 +1,26 @@
+<!-- This is the HTML template to login page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+<h2>Please, login to your account</h2>
+
+<form method="post">
+  <label>Username
+    <br>
+    <input type="text" name="username" value="{{username}}">
+  </label>
+  <br>
+  <br>
+  <label>Password
+    <br>
+    <input type="password" name="password" value="">
+  </label>
+  <br>
+  <h3>{{error}}</h3>
+  <br>
+  <input type="submit">
+</form>
+{% endblock %}

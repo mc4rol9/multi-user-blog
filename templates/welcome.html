@@ -1,0 +1,10 @@
+<!-- This is the HTML template to welcome page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+	<h2>Welcome, {{username}}!</h2>
+	<h3 class="center-txt">You're logged in now.</h3>
+{% endblock %}

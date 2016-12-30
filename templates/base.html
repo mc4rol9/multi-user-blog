@@ -1,0 +1,63 @@
+<!-- This is the base HTML template for pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <title>The Multi User Blog</title>
+
+    <!-- the main css stylesheet -->
+    <link type="text/css" rel="stylesheet" href="/static/main.css" />
+
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i" rel="stylesheet">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="icon" href="/static/favicon.ico">
+  </head>
+
+  <body>
+    <div class="container">
+        <header>
+          <a href="/" class="main-title">
+            <h1>The Multi User Blog</h1>
+          </a>
+        </header>
+
+        <article class="content">
+        <!-- the content templates will be included here -->
+        {% block content %}
+        {% endblock %}
+        </article>
+
+        <aside class="sidebar">
+          <h4>User Area</h4>
+          <br>
+          <br>
+          {% if user %}<!-- if user is logged in -->
+            <strong>{{user.name}}</strong> is logged in.
+            <br>
+            <br>
+            <a class="add-post" href="/newpost">add new post</a>
+            <br>
+            <br>
+            <br>
+            <a class="login-link" href="/logout">logout here!</a>
+            <br>
+          {% else %}<!-- if user isn't logged in -->
+            <a class="login-link" href="/login">login</a>
+            <br>
+            <a class="login-link" href="/signup">signup</a>
+          {% endif %}
+        </aside>
+
+        <footer>
+          by mc9 with love
+        </footer>
+      </div>
+  </body>
+</html>

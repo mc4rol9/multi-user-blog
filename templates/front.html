@@ -1,0 +1,26 @@
+<!-- This is the HTML template for front page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+  <!-- for loop to show posts -->
+  {% for post in posts %}
+  <section class="post">
+	  <div class="post-header">
+	    <a href="/{{ post.key().id() }}">
+	    	<h2>{{post.subject}}</h2>
+	    </a>
+	    <h4>{{post.likes}}  likes</h4>
+	    <h3 class="txt-right"><span>Posted on</span> {{post.created.strftime("%b %d, %Y")}}
+	        <span>by</span> {{post.author.name}}</h3>
+	  </div>
+	  <div class="post-content">
+	    <p>{{post.content | safe}}</p>
+	  </div>
+	</section>
+ 	<br>
+ 	<br>
+  {% endfor %}
+{% endblock %}

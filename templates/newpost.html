@@ -1,0 +1,27 @@
+<!-- This is the HTML template to login page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+  <h2>Create a new post.</h2>
+
+  <form method="post">
+    <label>Subject
+      <br>
+      <input type="text" name="subject" value="{{subject}}" class="subject">
+      <br>
+    </label>
+    <br>
+    <label>Content
+      <br>
+      <textarea name="content">{{content}}</textarea>
+      <br>
+    </label>
+    <br>
+    <h3>{{error}}</h3>
+    <br>
+    <input type="submit">
+  </form>
+{% endblock %}

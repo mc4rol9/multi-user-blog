@@ -1,0 +1,41 @@
+<!-- This is the HTML template to signup page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+  <h2>Please, signup for account.</h2>
+
+  <form method="post">
+    <label>Username
+      <br>
+      <input type="text" name="username" value="{{username}}">
+      <br>
+      <h3>{{username_error}}</h3>
+    </label>
+    <br>
+    <label>Password
+      <br>
+      <input type="password" name="password" value="">
+      <br>
+      <h3>{{password_error}}</h3>
+    </label>
+    <br>
+    <label>Verify Password
+      <br>
+      <input type="password" name="verify" value="">
+      <br>
+      <h3>{{verify_error}}</h3>
+    </label>
+    <br>
+    <label>Email (optional)
+      <br>
+      <input type="email" name="email" value="{{email}}">
+      <br>
+      <h3>{{email_error}}</h3>
+    </label>
+    <br>
+    <input type="submit">
+  </form>
+{% endblock %}

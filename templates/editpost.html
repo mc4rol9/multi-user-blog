@@ -1,0 +1,28 @@
+<!-- This is the HTML template to edit post page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+  <h2>Edit your post.</h2>
+
+  <form method="post">
+    <label>Subject
+      <br>
+      <input type="text" name="subject" value="{{subject}}" class="subject">
+      <br>
+    </label>
+    <br>
+    <label>Content
+      <br>
+      <textarea name="content">{{content | safe}}</textarea>
+      <br>
+    </label>
+    <h3>{{error}}</h3>
+    <br>
+    <button type="submit">Save</button>
+  </form>
+  <br>
+  <a href="/{{ post.key().id() }}?">Cancel</a>
+{% endblock %}

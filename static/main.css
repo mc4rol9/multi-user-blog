@@ -1,0 +1,186 @@
+/*
+/ Stylesheet for Multi User Blog
+*/
+
+
+/* General */
+* {
+    box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+nav,
+aside,
+hgroup,
+header,
+footer,
+figure,
+article,
+section,
+figcaption {
+  display: block;
+} /* HTML5 compatibility for older browsers  */
+
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: #353535;
+    font: 400 16px/1.2em "Lato", sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #353535;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: #fff;
+}
+
+h1,
+h2 {
+    color: #fff;
+    line-height: 1.2em;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: center;
+    background-color: #0072ff;
+    padding: 0.5em;
+    margin-bottom: 0;
+}
+
+h3 {
+    color: #0072ff;
+    font-size: 1em;
+    margin: 0.5em 0;
+}
+
+h4 {
+    color: #0072ff;
+    font-size: 1em;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    border: solid 2px;
+    padding: 0.5em 0.1em;
+}
+
+a,
+a:link,
+a:visited {
+    font-weight: 700;
+    color: #0072ff;
+}
+
+a:hover {
+    color: #353535;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+p {
+    text-align: justify;
+}
+
+span {
+    color: #353535;
+}
+
+form {
+    margin-top: 1em;
+}
+
+input[type="submit"],
+button {
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #0072ff;
+    padding: 0.5em;
+}
+
+.subject {
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    min-height: 30em;
+}
+
+.label {
+    text-align: right;
+}
+
+.error {
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    background-color: #353535;
+    padding: 0.5em;
+}
+
+
+/* Base template */
+
+header {
+    text-align: center;
+    background-color: #0072ff;
+    border-bottom: solid 10px #353535;
+    width: 100%;
+}
+
+
+article {
+    width: 70%;
+    padding: 3em;
+}
+
+aside {
+    text-align: left;
+    border-left: solid 5px #353535;
+    width: 30%;
+    padding: 3em;
+}
+
+footer {
+    color: #fff;
+    text-align: center;
+    background-color: #0072ff;
+    border-top: solid 10px #353535;
+    width: 100%;
+    padding: 1em;
+}
+
+
+/* General Classes */
+.center-txt {
+    text-align: center !important;
+}
+
+.txt-right {
+    text-align: right !important;
+}
+
+
+
+
