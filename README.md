@@ -36,7 +36,14 @@ To send/deploy this project to you Google Cloud App Engine:
 Understanding the files:
 
 `blog.py`
-This is the file with all the project scripts.
+This is the module for handlers.
+
+`posts.py`
+This is the module for posts data - db.model.
+
+`users.py`
+This is the module for users data - db.model, functions and data
+validations.
 
 `app.yaml`
 This is the configuration file for the app.
