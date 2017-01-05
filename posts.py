@@ -15,9 +15,10 @@ class Post(db.Model):
     """The database class for posts data."""
     subject = db.StringProperty(required=True)
     content = db.TextProperty(required=True)
-    likes = db.IntegerProperty(default=0)
     author = db.ReferenceProperty(User)
     created = db.DateTimeProperty(auto_now_add=True)
+    likes = db.IntegerProperty(default=0)
+    liked_by = db.ListProperty(str)
 
 
 class Comment(db.Model):
@@ -26,9 +27,3 @@ class Comment(db.Model):
     author = db.ReferenceProperty(User)
     content = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
-
-
-class Like(db.Model):
-    """the database class for likes in posts data."""
-    post_id = db.IntegerProperty(required=True)
-    author = db.ReferenceProperty(User)

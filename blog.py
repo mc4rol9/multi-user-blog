@@ -187,13 +187,14 @@ class PostPage(Handler):
     def get(self, post_id):
         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
         post = db.get(key)
-        comments = Comment.gql("WHERE post_id = %s ORDER BY created DESC"
+        comments = db.GqlQuery("SELECT * FROM Comment WHERE post_id = %s ORDER BY created DESC"
                                % int(post_id))
-        liked = None
+        liked = False
 
         if self.user:
-            liked = Like.gql("WHERE post_id = :1 AND author.name =  :2",
-                             int(post_id), self.user.name).get()
+            if post.author == self.user.name or self.user.name in post.liked_by:
+                liked = True
+
         if not post:
             self.error(404)
             return
@@ -206,26 +207,28 @@ class PostPage(Handler):
         if self.request.get("like"):
             if self.user and post:
                 post.likes += 1
-                like = Like(post_id=int(post_id), author=self.user)
-                like.put()
+                post.liked_by.append(self.user.name)
                 post.put()
                 self.redirect("/%s" % post_id)
         elif self.request.get("unlike"):
             if self.user and post:
                 post.likes -= 1
-                like = Like(post_id=int(post_id), author=self.user)
-                db.delete(key)
+                post.liked_by.remove(self.user.name)
                 post.put()
                 self.redirect("/%s" % post_id)
         else:
-            content = self.request.get("content")
-            if content:
-                comment = Comment(content=str(content), author=self.user,
-                                  post_id=int(post_id))
-                comment.put()
-                self.redirect("/%s" % post_id)
+            if not self.user:
+                return self.redirect('/login')
             else:
-                self.render("post.html", post=post)
+                content = self.request.get("content")
+
+                if content:
+                    comment = Comment(content=str(content), author=self.user,
+                                      post_id=int(post_id))
+                    comment.put()
+                    self.redirect("/%s" % post_id)
+                else:
+                    self.render("post.html", post=post)
 
 
 class EditPost(Handler):

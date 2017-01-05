@@ -22,12 +22,12 @@
 	  	</div>
 
 	  	<div class="post-footer">
-	  	{% if user %}
+	  	{% if user.name %}
 	  	<!-- is user is logged in -->
 			{% if post.author.name != user.name %}
 			<!-- if user is not the post author -->
 
-			  	{% if not liked and post.likes <= 0 %}
+			  	{% if not liked %}
 			  	<!-- if user didn't like the post -->
 				<form method="post" action="?like=True">
 					<button class="like" type="submit">
