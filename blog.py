@@ -192,7 +192,7 @@ class PostPage(Handler):
         liked = False
 
         if self.user:
-            if post.author == self.user.name or self.user.name in post.liked_by:
+            if self.user.name in post.liked_by:
                 liked = True
 
         if not post:
@@ -201,6 +201,9 @@ class PostPage(Handler):
         self.render("post.html", post=post, comments=comments, liked=liked)
 
     def post(self, post_id):
+        if not self.user:
+            return self.redirect('/login')
+
         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
         post = db.get(key)
 
@@ -217,18 +220,15 @@ class PostPage(Handler):
                 post.put()
                 self.redirect("/%s" % post_id)
         else:
-            if not self.user:
-                return self.redirect('/login')
-            else:
-                content = self.request.get("content")
+            content = self.request.get("content")
 
-                if content:
-                    comment = Comment(content=str(content), author=self.user,
-                                      post_id=int(post_id))
-                    comment.put()
-                    self.redirect("/%s" % post_id)
-                else:
-                    self.render("post.html", post=post)
+            if content:
+                comment = Comment(content=str(content), author=self.user,
+                                  post_id=int(post_id))
+                comment.put()
+                self.redirect("/%s" % post_id)
+            else:
+                self.render("post.html", post=post)
 
 
 class EditPost(Handler):
