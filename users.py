@@ -11,24 +11,22 @@ secret = 'op.y7t5YU$juImsbgt.uu&,P^6280nhf0'  # global for hashing
 # The Users data
 # Functions, validations and database classes
 
-# The regex validation for user data, using re library
-USER_RE = re.compile(r"[a-zA-Z0-9_-]{3,20}$")
-PASS_RE = re.compile(r"^.{3,20}$")
-EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
-
 
 def valid_username(username):
     """Username validation."""
+    USER_RE = re.compile(r"[a-zA-Z0-9_-]{3,20}$")
     return username and USER_RE.match(username)
 
 
 def valid_password(password):
     """Password validation."""
+    PASS_RE = re.compile(r"^.{3,20}$")
     return password and PASS_RE.match(password)
 
 
 def valid_email(email):
     """Email validation."""
+    EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
     return not email or EMAIL_RE.match(email)
 
 
