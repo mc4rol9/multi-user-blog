@@ -207,28 +207,31 @@ class PostPage(Handler):
         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
         post = db.get(key)
 
-        if self.request.get("like"):
+        if post.author.name != self.user.name:
             if self.user and post:
-                post.likes += 1
-                post.liked_by.append(self.user.name)
-                post.put()
-                self.redirect("/%s" % post_id)
-        elif self.request.get("unlike"):
-            if self.user and post:
-                post.likes -= 1
-                post.liked_by.remove(self.user.name)
+                if self.user.name not in post.liked_by:
+                    if self.request.get("like"):
+                        post.likes += 1
+                        post.liked_by.append(self.user.name)
+                else:
+                    if self.request.get("unlike"):
+                        post.likes -= 1
+                        post.liked_by.remove(self.user.name)
                 post.put()
                 self.redirect("/%s" % post_id)
         else:
-            content = self.request.get("content")
+            error = "You can't like your own post!"
+            self.render("post.html", post=post, error=error)
 
-            if content:
-                comment = Comment(content=str(content), author=self.user,
-                                  post_id=int(post_id))
-                comment.put()
-                self.redirect("/%s" % post_id)
-            else:
-                self.render("post.html", post=post)
+        content = self.request.get("content")
+
+        if content:
+            comment = Comment(content=str(content), author=self.user,
+                              post_id=int(post_id))
+            comment.put()
+            self.redirect("/%s" % post_id)
+        else:
+            self.render("post.html", post=post)
 
 
 class EditPost(Handler):
