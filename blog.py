@@ -3,7 +3,7 @@ import os
 import webapp2
 import jinja2
 
-from users import *  # import modele for users data: functions and db classes
+from users import *  # import module for users data: functions and db classes
 from posts import *  # import module for posts data: functions and db classes
 
 from google.appengine.ext import db
@@ -198,40 +198,45 @@ class PostPage(Handler):
         if not post:
             self.error(404)
             return
+
         self.render("post.html", post=post, comments=comments, liked=liked)
 
     def post(self, post_id):
         if not self.user:
             return self.redirect('/login')
+        else:
+            key = db.Key.from_path('Post', int(post_id), parent=blog_key())
+            post = db.get(key)
 
-        key = db.Key.from_path('Post', int(post_id), parent=blog_key())
-        post = db.get(key)
-
-        if post.author.name != self.user.name:
-            if self.user and post:
-                if self.user.name not in post.liked_by:
-                    if self.request.get("like"):
-                        post.likes += 1
-                        post.liked_by.append(self.user.name)
+            if not post:
+                self.error(404)
+                return
+            else:
+                if post.author.name != self.user.name:
+                    if self.user and post:
+                        if self.user.name not in post.liked_by:
+                            if self.request.get("like"):
+                                post.likes += 1
+                                post.liked_by.append(self.user.name)
+                        else:
+                            if self.request.get("unlike"):
+                                post.likes -= 1
+                                post.liked_by.remove(self.user.name)
+                        post.put()
+                        self.redirect("/%s" % post_id)
                 else:
-                    if self.request.get("unlike"):
-                        post.likes -= 1
-                        post.liked_by.remove(self.user.name)
-                post.put()
-                self.redirect("/%s" % post_id)
-        else:
-            error = "You can't like your own post!"
-            self.render("post.html", post=post, error=error)
+                    error = "You can't like your own post!"
+                    self.render("post.html", post=post, error=error)
 
-        content = self.request.get("content")
+                content = self.request.get("content")
 
-        if content:
-            comment = Comment(content=str(content), author=self.user,
-                              post_id=int(post_id))
-            comment.put()
-            self.redirect("/%s" % post_id)
-        else:
-            self.render("post.html", post=post)
+                if content:
+                    comment = Comment(content=str(content), author=self.user,
+                                      post_id=int(post_id))
+                    comment.put()
+                    self.redirect("/%s" % post_id)
+                else:
+                    self.render("post.html", post=post)
 
 
 class EditPost(Handler):
