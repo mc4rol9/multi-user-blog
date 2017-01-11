@@ -247,11 +247,14 @@ class EditPost(Handler):
             key = db.Key.from_path('Post', int(post_id), parent=blog_key())
             post = db.get(key)
 
-            if not post:
-                self.error(404)
-                return
-            self.render("editpost.html", subject=post.subject,
-                        content=post.content, post=post)
+            if post.author.name != self.user.name:
+                self.redirect("/%s" % post_id)
+            else:
+                if not post:
+                    self.error(404)
+                    return
+                self.render("editpost.html", subject=post.subject,
+                            content=post.content, post=post)
         else:
             self.redirect("/login")
 
@@ -285,10 +288,13 @@ class DeletePost(Handler):
             key = db.Key.from_path('Post', int(post_id), parent=blog_key())
             post = db.get(key)
 
-            if not post:
-                self.error(404)
-                return
-            self.render("deletepost.html", post=post)
+            if post.author.name != self.user.name:
+                self.redirect("/%s" % post_id)
+            else:
+                if not post:
+                    self.error(404)
+                    return
+                self.render("deletepost.html", post=post)
         else:
             self.redirect("/login")
 
@@ -310,12 +316,14 @@ class EditComment(Handler):
             key = db.Key.from_path('Comment', int(comment_id))
             comment = db.get(key)
 
-            if not comment:
-                self.error(404)
-                return
-
-            self.render("editcomment.html", content=comment.content,
-                        post_id=comment.post_id)
+            if comment.author.name != self.user.name:
+                self.redirect("/%s" % comment.post_id)
+            else:
+                if not comment:
+                    self.error(404)
+                    return
+                self.render("editcomment.html", content=comment.content,
+                            post_id=comment.post_id)
         else:
             self.redirect("/login")
 
@@ -347,10 +355,13 @@ class DeleteComment(Handler):
             key = db.Key.from_path('Comment', int(comment_id))
             comment = db.get(key)
 
-            if not comment:
-                self.error(404)
-                return
-            self.render("deletecomment.html", comment=comment)
+            if comment.author.name != self.user.name:
+                self.redirect("/%s" % comment.post_id)
+            else:
+                if not comment:
+                    self.error(404)
+                    return
+                self.render("deletecomment.html", comment=comment)
         else:
             self.redirect("/login")
 
